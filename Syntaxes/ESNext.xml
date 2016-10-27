@@ -1,0 +1,305 @@
+<?xml version="1.0"?>
+<syntax name="language-root.js.esnext">
+	<!-- This is largely a verbatim copy of the core Javascript support (calling out to core collections wherever possible); unfortunately, due to the anonymous zones (necessary for performance optimization), it isn't possible to do this with SyntaxInjections -->
+	<zones>
+		<!-- Standard JavaScript syntax -->
+		<include collection="comments" />
+		<include collection="functions" />
+		<include collection="strings" />
+		<include collection="regex" />
+		<include collection="classes" />
+		<include collection="switch-blocks" />
+		<include collection="keywords" />
+		<include collection="punctuation" />
+		<include collection="variables" />
+	</zones>
+
+	<library>
+		<!--Comments-->
+		<collection name="comments">
+			<include syntax="language-root.js" collection="comments" />
+		</collection>
+
+		<!--Strings-->
+		<collection name="strings">
+			<include syntax="language-root.js" collection="strings" />
+			<include collection="strings.template" />
+		</collection>
+		
+		<collection name="strings.basic">
+			<include syntax="language-root.js" collection="strings.basic" />
+			<include collection="strings.template" />
+		</collection>
+		
+		<collection name="strings.template">
+			<zone name="string.template">
+				<starts-with>
+					<expression>`</expression>
+					<capture number="0" name="punctuation.definition.begin"/>
+				</starts-with>
+				<ends-with>
+					<expression>`</expression>
+					<capture number="0" name="punctuation.definition.end" />
+				</ends-with>
+				<subzones>
+					<include syntax="language-root.js" collection="character-escapes" />
+					<zone name="interpolated-code">
+						<expression>(\$\{)(.*?)(\})</expression>
+						<capture number="1" name="punctuation.definition.begin"/>
+						<capture number="2" name="expression">
+							<subzones>
+								<include collection="comments" />
+								<include collection="strings.basic" />
+								<include collection="regex" />
+								<include collection="keywords.all" />
+								<include collection="punctuation" />
+							</subzones>
+						</capture>
+						<capture number="3" name="punctuation.definition.end"/>
+					</zone>
+				</subzones>
+			</zone>
+		</collection>
+
+		<!--Regex Literals-->
+		<collection name="regex">
+			<!-- Verbatim copy, except we expand the flags support with `u` and `y` -->
+			<zone name="regex.literal">
+				<starts-with>
+					<expression>(?&lt;=[=(\[:;,!|&amp;]|^|return)\s*(/)(?![/*+{}?])</expression>
+					<capture number="1" name="punctuation.definition.begin"/>
+				</starts-with>
+				<ends-with>
+					<expression>(/)([igmuy]*)</expression>
+					<capture number="1" name="punctuation.definition.end"/>
+					<capture number="2" name="regex.flags" />
+				</ends-with>
+				<subzones>
+					<cut-off>(?&lt;!\\)/</cut-off>
+					<include syntax="language-root.regex" />
+				</subzones>
+			</zone>
+		</collection>
+
+		<!--All Functions-->
+		<collection name="functions">
+			<!-- someObject.doSomething = function(...) ... -->
+			<zone>
+				<expression>((?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(function\*?))\s*(\()|\b((function\*?)\s+([a-zA-Z_$][\w$]*)\s*)(\()|\b((function\*?)\s*)(\()</expression>
+				<capture number="1" name="function.definition.x-assignment"/>
+				<capture number="2" name="keyword.storage.type" behavior="text-to-name" behavior-match="^(let|const)$" behavior-transform="(?1:esnext:)"/>
+				<capture number="3" name="name"/>
+				<capture number="4" name="string.quoted">
+					<!--Optional quoted version of properties-->
+					<subzones>
+						<zone>
+							<expression>('|")((?:(\\(?:x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))|.)*?)(\1)</expression>
+							<capture number="1" name="punctuation.definition.begin"/>
+							<capture number="2" name="name"/>
+							<capture number="3" name="constant.character.escape"/>
+							<capture number="4" name="punctuation.definition.end"/>
+						</zone>
+					</subzones>
+				</capture>
+				<capture number="5" name="operator" behavior="text-to-name" behavior-match="^=|(:)$" behavior-transform="(?1:x-colon:)"/>
+				<capture number="6" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator.esnext:)"/>
+				<capture number="7" name="punctuation.brace.round.open"/>
+				<!-- function doSomething(...) ... -->
+				<capture number="8" name="function.definition"/>
+				<capture number="9" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator.esnext:)"/>
+				<capture number="10" name="name"/>
+				<capture number="11" name="punctuation.brace.round.open"/>
+				<!-- function() { ... } -->
+				<capture number="12" name="function.definition.anonymous"/>
+				<capture number="13" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator.esnext:)"/>
+				<capture number="14" name="punctuation.brace.round.open"/>
+			</zone>
+			<!-- Arrow syntax -->
+			<zone>
+				<!-- We currently only support functions that use braces for their body, because detecting single-line statements is next to impossible to do accurately as of yet -->
+				<expression>((?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(?:(\(.*?\)|[a-zA-Z_$][\w$.]*))\s*(=>))\s*(\{)|((\(.*?\)|[a-zA-Z_$][\w$.]*)\s*(=>))\s*(\{)</expression>
+				<capture number="1" name="function.definition.x-assignment"/>
+				<capture number="2" name="keyword.storage.type"/>
+				<capture number="3" name="name"/>
+				<capture number="4" name="string.quoted">
+					<!--Optional quoted version of properties-->
+					<subzones>
+						<include collection="utility.property-assignment" />
+					</subzones>
+				</capture>
+				<capture number="5" name="operator" behavior="text-to-name" behavior-match="^(:)$" behavior-transform="(?1:x-colon:)"/>
+				<capture number="6" name="parameters">
+					<subzones>
+						<include collection="comments" />
+						<include collection="strings.basic" />
+						<include collection="regex" />
+						<include collection="keywords.all" />
+						<include collection="punctuation" />
+					</subzones>
+				</capture>
+				<capture number="7" name="operator.x-arrow" />
+				<capture number="8" name="punctuation.brace.curly.open" />
+				<!-- Anonymous arrow functions -->
+				<capture number="9" name="function.definition.anonymous" />
+				<capture number="10" name="parameters">
+					<subzones>
+						<include collection="comments" />
+						<include collection="strings.basic" />
+						<include collection="regex" />
+						<include collection="keywords.all" />
+						<include collection="punctuation" />
+					</subzones>
+				</capture>
+				<capture number="11" name="operator.x-arrow" />
+				<capture number="12" name="punctuation.brace.curly.open" />
+			</zone>
+		</collection>
+
+		<!--Classes-->
+		<collection name="classes">
+			<!-- var MyClass = class { ... } -->
+			<zone name="class.definition.x-assignment">
+				<starts-with>
+					<expression>(?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(class)</expression>
+					<capture number="1" name="keyword.storage.type" />
+					<capture number="2" name="name" />
+					<capture number="3" name="string.quoted">
+						<!--Optional quoted version of properties-->
+						<subzones>
+							<include collection="utility.property-assignment" />
+						</subzones>
+					</capture>
+					<capture number="4" name="operator" behavior="text-to-name" behavior-match="^(:)$" behavior-transform="(?1:x-colon:)"/>
+					<capture number="5" name="keyword.storage.type" />
+				</starts-with>
+				<ends-with>
+					<expression>(?=\{)</expression>
+				</ends-with>
+				<subzones>
+					<include syntax="language-root.js" collection="keywords" />
+					<!-- We include function invocation in case of mix-ins: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins -->
+					<zone>
+						<expression>(\.?)([a-zA-Z_$][\w$]*)\s*(\()</expression>
+						<capture number="1" name="punctuation"/>
+						<capture number="2" name="function"/>
+						<capture number="3" name="punctuation.brace.round.open"/>
+					</zone>
+					<zone name="variable.class.parent">
+						<expression>\b[a-zA-Z_$][\w$.]*\b</expression>
+					</zone>
+				</subzones>
+			</zone>
+			
+			<zone name="class.definition">
+				<starts-with>
+					<expression>\b(class)\s+([a-zA-Z_$][\w$.]*)</expression>
+					<capture number="1" name="keyword.control"/>
+					<capture number="2" name="name"/>
+				</starts-with>
+				<ends-with>
+					<expression>(?=\{)</expression>
+				</ends-with>
+				<subzones>
+					<include syntax="language-root.js" collection="keywords" />
+					<!-- We include function invocation in case of mix-ins: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins -->
+					<zone>
+						<expression>(\.?)([a-zA-Z_$][\w$]*)\s*(\()</expression>
+						<capture number="1" name="punctuation"/>
+						<capture number="2" name="function"/>
+						<capture number="3" name="punctuation.brace.round.open"/>
+					</zone>
+					<zone name="variable.class.parent">
+						<expression>\b[a-zA-Z_$][\w$.]*\b</expression>
+					</zone>
+				</subzones>
+			</zone>
+			
+			<include syntax="language-root.js" collection="classes" />
+		</collection>
+
+		<!--Switch blocks-->
+		<collection name="switch-blocks">
+			<include syntax="language-root.js" collection="switch-blocks" />
+		</collection>
+
+		<!--Keywords and constants-->
+		<collection name="keywords">
+			<zone>
+				<expression>\b(?:(case|continue|default|finally|for|throw|void|delete|in|instanceof|typeof|with|new|of|as|from|yield\*?|extends)|(else if)|(catch|switch|break|return|else|try|do|while|if|export|import)|(abstract|boolean|byte|char|debugger|double|enum|final|float|goto|implements|import|int|interface|long|native|package|private|protected|public|short|synchronized|throws|transient|volatile)|(super|this)|(Array|Boolean|Date|Function|Math|Number|Object|RegExp|String|Map|Set|WeakMap|WeakSet|Proxy|Symbol|Promise|Reflect|console|document|history|location|screen|window|self|top|parent)|(undefined|NaN|true|false|null)|([0-9]+\.?[0-9]*(?:[eE]-?[0-9]+)?|0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|Infinity))\b</expression>
+				<capture number="1" name="keyword.control"/>
+				<capture number="2" name="keyword.control.x-else-if"/>
+				<capture number="3" name="keyword.control" behavior="text-to-name" behavior-transform="x-$0" />
+				<capture number="4" name="keyword.reserved"/>
+				<capture number="5" name="keyword.variable.language"/>
+				<capture number="6" name="support.variable.built-in"/>
+				<capture number="7" name="constant.language"/>
+				<capture number="8" name="constant.numeric"/>
+			</zone>
+		</collection>
+		
+		<collection name="keywords.storage.type">
+			<zone name="keyword.storage.type">
+				<expression>\b(?:function\*?|var|let|const|static|class)\b</expression>
+			</zone>
+		</collection>
+
+		<collection name="keywords.all">
+			<include collection="keywords" />
+			<!--These have to be deferred for the normal language, so include them explicitly here-->
+			<include collection="keywords.storage.type" />
+		</collection>
+
+		<!--Punctuation and operators-->
+		<collection name="punctuation">
+			<zone>
+				<expression>((?:\+|-|\*|/|%|&amp;|\||\^|>{1,3}|&lt;{1,2})=|!={1,2}|={1,3}|\+{1,2}|-{1,2}|\*|/|%|&lt;{1,2}|>{1,3}|!{1,2}|&amp;{1,2}|\|{1,2}|\^|~)|(\()|(\)(?:;|,)?)|(\{)|(\}(?:;|,)?)|(\[)|(\](?:;|,)?)|(\.|:|\?|\.\.\.)|(,)|(;)|(=>)</expression>
+				<capture number="1" name="operator"/>
+				<capture number="2" name="punctuation.brace.round.open"/>
+				<capture number="3" name="punctuation.brace.round.close" behavior="text-to-name" behavior-match="^.*?(?:(;)|(,))?$" behavior-transform="(?1:x-semicolon:)(?2:x-comma:)"/>
+				<capture number="4" name="punctuation.brace.curly.open"/>
+				<capture number="5" name="punctuation.brace.curly.close" behavior="text-to-name" behavior-match="^.*?(?:(;)|(,))?$" behavior-transform="(?1:x-semicolon:)(?2:x-comma:)"/>
+				<capture number="6" name="punctuation.brace.square.open"/>
+				<capture number="7" name="punctuation.brace.square.close" behavior="text-to-name" behavior-match="^.*?(?:(;)|(,))?$" behavior-transform="(?1:x-semicolon:)(?2:x-comma:)"/>
+				<capture number="8" name="punctuation"/>
+				<capture number="9" name="punctuation.x-comma"/>
+				<capture number="10" name="punctuation.x-semicolon"/>
+				<capture number="11" name="operator.x-arrow" />
+			</zone>
+		</collection>
+
+		<!--Variables-->
+		<collection name="variables">
+			<!--Variable assignment-->
+			<!-- We define special zones for variable assignments to allow the itemizers to easily capture anonymous functions assigned to specific variables as a named function (since they are equivalent, and otherwise we end up with a lot of anonymous functions depending on coding style) -->
+			<!-- The var keyword is included to allow the itemizers to be drag and dropped with predictable results -->
+			<zone>
+				<expression>((?:(var|let|const)\s+)?([a-zA-Z_$][\w$.]*)\s*(=|:))(?!=)|(\.?)(addEventListener|removeEventListener)\s*(\()|(\.?)([a-zA-Z_$][\w$]*)\s*(\()</expression>
+				<capture number="1" name="x-assignment"/>
+				<capture number="2" name="keyword.storage.type" />
+				<capture number="3" name="name"/>
+				<capture number="4" name="operator" behavior="text-to-name" behavior-match="^=|(:)$" behavior-transform="(?1:x-colon:)"/>
+				<!-- Special case to avoid [text] comparisons in CodeSenseProviders -->
+				<capture number="5" name="punctuation"/>
+				<capture number="6" name="function.eventListener"/>
+				<capture number="7" name="punctuation.brace.round.open"/>
+				<!--Function Invocation-->
+				<capture number="8" name="punctuation"/>
+				<capture number="9" name="function"/>
+				<capture number="10" name="punctuation.brace.round.open"/>
+			</zone>
+			<!--Generic var/function keywords (needs to be last so that they don't mess up x-assignment zones)-->
+			<include collection="keywords.storage.type" />
+		</collection>
+		
+		<collection name="utility.property-assignment">
+			<zone>
+				<expression>('|")((?:(\\(?:x\h{2}|[0-2][0-7]{,2}|3[0-6][0-7]?|37[0-7]?|[4-7][0-7]?|.))|.)*?)(\1)</expression>
+				<capture number="1" name="punctuation.definition.begin"/>
+				<capture number="2" name="name"/>
+				<capture number="3" name="constant.character.escape"/>
+				<capture number="4" name="punctuation.definition.end"/>
+			</zone>
+		</collection>
+		
+	</library>
+</syntax>

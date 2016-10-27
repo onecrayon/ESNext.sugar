@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	
+	<language id="com.onecrayon.sugar.ESNext">
+		<syntax-name>language-root.js.esnext</syntax-name>
+		<name>ES Next</name>
+		<detectors>
+			<!-- There don't appear to be any standardized extensions for this, but here are some that are in use elsewhere -->
+			<extension>es</extension>
+			<extension>es6</extension>
+			<extension>babel</extension>
+			<!-- This pattern is custom to Espresso; basically a Javascript hashbang -->
+			<combo>
+				<extension>js</extension>
+				<match-content lines="1">(?i)^//!\s*(?:es[ \.-]?next|(?:ecmascript|es)[ -]?(?:6|7|201[5-7]))</match-content>
+			</combo>
+			<!-- This pattern is used by Atom -->
+			<combo>
+				<extension>js</extension>
+				<match-content lines="1">(?i)^('|")use babel\1</match-content>
+			</combo>
+		</detectors>
+	</language>
+	
+</settings>

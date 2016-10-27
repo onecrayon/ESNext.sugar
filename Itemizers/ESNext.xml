@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itemizer language-context="js.esnext">
+	
+	<!-- class MyClass { ... } -->
+	<item name="js.class.named">
+		<class>ESCodeClassItem</class>
+		<start-zones>class.definition:has-child(name:capture(name)) + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	<!-- class MyClass /*some comment*/ { ... } -->
+	<item name="js.class.named.commented">
+		<class>ESCodeClassItem</class>
+		<start-zones>class.definition:has-child(name:capture(name)) + comment + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	
+	<!-- variable = class { ... } -->
+	<item name="js.class.assignment">
+		<class>ESCodeClassItem</class>
+		<start-zones>class.x-assignment:has-child(name:capture(name)) + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	<!-- variable = class /*comment*/ { ... } -->
+	<item name="js.class.assignment.commented">
+		<class>ESCodeClassItem</class>
+		<start-zones>function.x-assignment:has-child(name:capture(name)) + comment + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	
+	<!-- "property": class { ... } -->
+	<item name="js.class.property">
+		<class>ESCodeClassItem</class>
+		<start-zones>class.x-assignment:has-child(string:has-child(name:capture(name))) + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	<!-- "property": class /*comment*/ { ... } -->
+	<item name="js.class.property.commented">
+		<class>ESCodeClassItem</class>
+		<start-zones>class.x-assignment:has-child(string:has-child(name:capture(name))) + comment + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	
+	<!-- myFunction(...) { ... } -->
+	<item name="js.esnext.function.shorthand">
+		<start-zones>function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	<!-- myFunction(...) /* comment */ { ... } -->
+	<item name="js.esnext.function.shorthand.commented">
+		<start-zones>function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + comment + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	
+</itemizer>
