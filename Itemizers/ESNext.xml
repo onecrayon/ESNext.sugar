@@ -58,6 +58,15 @@
 		</subitems>
 	</item>
 	
+	<!-- var myFunction = () => { ... } --->
+	<item name="js.function.assignment.arrow">
+		<start-zones>function.x-assignment.arrow:has-child(name:capture(name)) + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers />
+		</subitems>
+	</item>
+	
 	<!-- myFunction(...) { ... } -->
 	<item name="js.esnext.function.shorthand">
 		<start-zones>function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + brace.curly.open</start-zones>

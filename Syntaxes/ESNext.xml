@@ -114,7 +114,7 @@
 			<zone>
 				<!-- We currently only support functions that use braces for their body, because detecting single-line statements is next to impossible to do accurately -->
 				<expression>((?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(?:(\(.*?\)|[a-zA-Z_$][\w$.]*))\s*(=>))\s*(\{)|((\(.*?\)|[a-zA-Z_$][\w$.]*)\s*(=>))\s*(\{)</expression>
-				<capture number="1" name="function.definition.x-assignment"/>
+				<capture number="1" name="function.definition.x-assignment.arrow"/>
 				<capture number="2" name="keyword.storage.type"/>
 				<capture number="3" name="name"/>
 				<capture number="4" name="string.quoted">
