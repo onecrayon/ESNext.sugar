@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codesense version="1.0">
+	
+	<set name="com.onecrayon.esnext.keywords">
+		<completion string="function*">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\s*\(|\s+[a-zA-Z_$])|\s*[^(a-zA-Z_$]|[^\s(]</matched-suffix>
+					<transform-into>(?1:: ${1:name}($2\) {$3})</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="get">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\s*\(|\s+[a-zA-Z_$])|\s*[^(a-zA-Z_$]|[^\s(]</matched-suffix>
+					<transform-into>(?1:: ${1:name}(\) {$2})</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="set">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\s*\(|\s+[a-zA-Z_$])|\s*[^(a-zA-Z_$]|[^\s(]</matched-suffix>
+					<transform-into>(?1:: ${1:name}($2\) {$3})</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="static">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\s*\(|\s+[a-zA-Z_$])|\s*[^(a-zA-Z_$]|[^\s(]</matched-suffix>
+					<transform-into>(?1:: ${1:name}($2\) {$3})</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		
+		<completion string="class">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\s*\{|\s+[a-zA-Z_$][\w$.]*)|\s*[a-zA-Z_$][\w$.]*|[^\s{]</matched-suffix>
+					<transform-into>(?1:: ${1:Name} {
+	$0
+})</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		
+		<completion string="let" />
+		<completion string="const" />
+		
+		<completion string="extends" />
+		
+		<completion string="export" />
+		<completion string="import" />
+		<completion string="from" />
+		
+		<completion string="yield" />
+		<completion string="yield*" />
+	</set>
+	
+	<set name="com.onecrayon.esnext.natives">
+		<behavior>
+			<append-dynamic>
+				<matched-suffix>(\()|[^(]</matched-suffix>
+				<transform-into>(?1::($1\))</transform-into>
+			</append-dynamic>
+		</behavior>
+		<completion string="Map" />
+		<completion string="Set" />
+		<completion string="WeakMap" />
+		<completion string="WeakSet" />
+		<completion string="Proxy" />
+		<completion string="Promise" />
+		
+		<completion string="ArrayBuffer" />
+		<completion string="DataView" />
+		<completion string="Int8Array" />
+		<completion string="Uint8Array" />
+		<completion string="Uint8ClampedArray" />
+		<completion string="Int16Array" />
+		<completion string="Uint16Array" />
+		<completion string="Int32Array" />
+		<completion string="Uint32Array" />
+		<completion string="Float32Array" />
+		<completion string="Float64Array" />
+	</set>
+	
+	<set name="com.onecrayon.esnext.natives.static">
+		<completion string="Array" />
+		<completion string="Symbol" />
+		<completion string="Reflect" />
+	</set>
+
+</codesense>

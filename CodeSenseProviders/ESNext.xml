@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<codesense>
+	
+	<!-- New keywords -->
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.keywords</completions>
+		<complete-match>(?&lt;!\.)\b[a-zA-Z]*</complete-match>
+	</provider>
+	
+	<!-- New native objects -->
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.natives</completions>
+		<complete-match capture="1">\bnew\s+([a-zA-Z]*)</complete-match>
+	</provider>
+	
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.natives.static</completions>
+		<!--This lookbehind is fragile (what if they have more than one space after `new`?), but it's the only way I can prevent duplicate CodeSense in constructors-->
+		<complete-match>(?&lt;!new )\b[A-Z][a-zA-Z]*</complete-match>
+	</provider>
+	
+</codesense>
