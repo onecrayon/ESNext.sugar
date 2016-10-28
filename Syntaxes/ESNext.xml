@@ -137,7 +137,7 @@
 				<capture number="7" name="operator.x-arrow" />
 				<capture number="8" name="punctuation.brace.curly.open" />
 				<!-- Anonymous arrow functions -->
-				<capture number="9" name="function.definition.anonymous" />
+				<capture number="9" name="function.definition.anonymous.arrow" />
 				<capture number="10" name="parameters">
 					<subzones>
 						<include collection="comments" />

@@ -67,6 +67,16 @@
 		</subitems>
 	</item>
 	
+	<!-- () => { ... } -->
+	<item name="js.function.anonymous">
+		<class>ESJSAnonymousFunctionItem</class>
+		<start-zones>function.definition.anonymous.arrow + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	
 	<!-- static myFunction(...) { ... } -->
 	<item name="js.esnext.function.method.shorthand">
 		<start-zones>keyword.storage.type + function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + brace.curly.open</start-zones>
