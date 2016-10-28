@@ -32,6 +32,12 @@ Relaunch Espresso, and ES Next will be available in your **View&rarr;Languages**
 
 Alternately, you can [download the Sugar](https://github.com/onecrayon/ESNext.sugar/zipball/master), decompress it, rename the resulting folder `ESNext.sugar`, and double click to install it.
 
+## Changelog
+
+**1.0**
+
+* Initial release: syntax parsing and CodeSense support for ES 6 (ECMAScript 2015 & 2016)
+
 ## MIT License 
 
 Copyright (c) 2016 Ian Beck
