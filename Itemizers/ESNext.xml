@@ -67,6 +67,23 @@
 		</subitems>
 	</item>
 	
+	<!-- static myFunction(...) { ... } -->
+	<item name="js.esnext.function.method.shorthand">
+		<start-zones>keyword.storage.type + function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	<!-- static myFunction(...) /* comment */ { ... } -->
+	<item name="js.esnext.function.method.shorthand.commented">
+		<start-zones>keyword.storage.type + function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + comment + brace.curly.open</start-zones>
+		<end-zone>brace.curly.close</end-zone>
+		<subitems>
+			<include-root-itemizers/>
+		</subitems>
+	</item>
+	
 	<!-- myFunction(...) { ... } -->
 	<item name="js.esnext.function.shorthand">
 		<start-zones>function:not(definition):capture(name) + brace.round.open ~(balanced) brace.round.close + brace.curly.open</start-zones>

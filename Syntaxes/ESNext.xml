@@ -240,7 +240,7 @@
 		<collection name="keywords.storage.type">
 			<!-- MODIFIED: originally just detected function|var -->
 			<zone name="keyword.storage.type">
-				<expression>\b(?:function\*?|var|let|const|static|class)\b</expression>
+				<expression>\b(?:function\*?|var|let|const|static|class|get|set)\b</expression>
 			</zone>
 		</collection>
 
@@ -276,7 +276,7 @@
 			<!-- We define special zones for variable assignments to allow the itemizers to easily capture anonymous functions assigned to specific variables as a named function (since they are equivalent, and otherwise we end up with a lot of anonymous functions depending on coding style) -->
 			<!-- The var keyword is included to allow the itemizers to be drag and dropped with predictable results -->
 			<zone>
-				<expression>((?:(var|let|const)\s+)?([a-zA-Z_$][\w$.]*)\s*(=|:))(?!=)|(\.?)(addEventListener|removeEventListener)\s*(\()|(\.?)([a-zA-Z_$][\w$]*)\s*(\()</expression>
+				<expression>((?:(var|let|const)\s+)?([a-zA-Z_$][\w$.]*)\s*(=|:))(?!=)|(\.?)(addEventListener|removeEventListener)\s*(\()|(?:(\.?)|(static|get|set)\s+)([a-zA-Z_$][\w$]*)\s*(\()</expression>
 				<capture number="1" name="x-assignment"/>
 				<capture number="2" name="keyword.storage.type" />
 				<capture number="3" name="name"/>
@@ -287,8 +287,9 @@
 				<capture number="7" name="punctuation.brace.round.open"/>
 				<!--Function Invocation-->
 				<capture number="8" name="punctuation"/>
-				<capture number="9" name="function"/>
-				<capture number="10" name="punctuation.brace.round.open"/>
+				<capture number="9" name="keyword.storage.type" />
+				<capture number="10" name="function"/>
+				<capture number="11" name="punctuation.brace.round.open"/>
 			</zone>
 			<!--Generic var/function keywords (needs to be last so that they don't mess up x-assignment zones)-->
 			<include collection="keywords.storage.type" />
