@@ -88,8 +88,407 @@
 	
 	<set name="com.onecrayon.esnext.natives.static">
 		<completion string="Array" />
+		<completion string="Number" />
 		<completion string="Symbol" />
 		<completion string="Reflect" />
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.Array">
+		<completion string="isArray">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:object}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="from">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:arrayLike}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="of">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:elements, ...}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.Number">
+		<completion string="isNaN">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:value}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="isFinite">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:value}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="isInteger">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:value}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="parseInt">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:string}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="parseFloat">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:string}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="isSafeInteger">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:value}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="EPSILON" />
+		<completion string="MAX_SAFE_INTEGER" />
+		<completion string="MIN_SAFE_INTEGER" />
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.Math">
+		<behavior>
+			<append-dynamic>
+				<matched-suffix>(\()|[^(]</matched-suffix>
+				<transform-into>(?1::(${1:x}\))</transform-into>
+			</append-dynamic>
+		</behavior>
+		<completion string="imul">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:a}, ${2:b}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="clz32" />
+		<completion string="fround" />
+		<completion string="log10" />
+		<completion string="log2" />
+		<completion string="log1p" />
+		<completion string="expm1" />
+		<completion string="cosh" />
+		<completion string="sinh" />
+		<completion string="tanh" />
+		<completion string="acosh" />
+		<completion string="asinh" />
+		<completion string="atanh" />
+		<completion string="hypot">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:values, ...}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="trunc" />
+		<completion string="sign" />
+		<completion string="cbrt" />
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.Object">
+		<completion string="is">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:value1}, ${2:value2}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="setPrototypeOf">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:object}, ${2:prototype}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="assign">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target, ...sources}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="getOwnPropertySymbols">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:object}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="values">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:object}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="entries">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:object}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="getOwnPropertyDescriptors">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:object}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.String">
+		<completion string="fromCodePoint">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:numbers, ...}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="raw">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(`)|[^`]</matched-suffix>
+					<transform-into>(?1::`${1:template}`)</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.Symbol">
+		<completion string="iterator" />
+		<completion string="match" />
+		<completion string="prototype" />
+		<completion string="species" />
+		<completion string="replace" />
+		<completion string="search" />
+		<completion string="split" />
+		<completion string="toPrimitive" />
+		<completion string="hasInstance" />
+		<completion string="isConcatSpreadable" />
+		<completion string="unscopables" />
+		<completion string="for">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:key}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="keyFor">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:symbol}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+	</set>
+	
+	<set name="com.onecrayon.esnext.native.Reflect">
+		<completion string="apply">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:thisArgument}, ${3:argumentsList}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="construct">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:argumentsList}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="defineProperty">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:propertyKey}, ${3:attributes}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="deleteProperty">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:propertyKey}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="get">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:propertyKey}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="getOwnPropertyDescriptor">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:propertyKey}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="getPrototypeOf">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="has">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:propertyKey}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="isExtensible">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="ownKeys">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="preventExtensions">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="set">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:propertyKey}, ${3:value}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="setPrototypeOf">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:target}, ${2:prototype}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+	</set>
+	
+	<set name="com.onecrayon.esnext.methods">
+		<behavior>
+			<append-dynamic>
+				<matched-suffix>(\()|[^(]</matched-suffix>
+				<transform-into>(?1::(\))</transform-into>
+			</append-dynamic>
+		</behavior>
+		<!-- Strings -->
+		<completion string="startsWith">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:searchString}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="endsWith">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:searchString}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="repeat">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:count}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="codePointAt">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:position}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<completion string="includes">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:searchString}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
+		<!-- Iterables -->
+		<completion string="entries" />
+		<completion string="keys" />
+		<completion string="values" />
+		<completion string="has">
+			<behavior>
+				<append-dynamic>
+					<matched-suffix>(\()|[^(]</matched-suffix>
+					<transform-into>(?1::(${1:value}\))</transform-into>
+				</append-dynamic>
+			</behavior>
+		</completion>
 	</set>
 
 </codesense>

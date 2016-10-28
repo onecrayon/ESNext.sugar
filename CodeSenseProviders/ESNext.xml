@@ -8,6 +8,13 @@
 		<complete-match>(?&lt;!\.)\b[a-zA-Z]*</complete-match>
 	</provider>
 	
+	<!--Properties and Methods-->
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.methods</completions>
+		<complete-match capture="1">\.([a-zA-Z][a-zA-Z ]*)</complete-match>
+	</provider>
+	
 	<!-- New native objects -->
 	<provider>
 		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
@@ -20,6 +27,44 @@
 		<completions>com.onecrayon.esnext.natives.static</completions>
 		<!--This lookbehind is fragile (what if they have more than one space after `new`?), but it's the only way I can prevent duplicate CodeSense in constructors-->
 		<complete-match>(?&lt;!new )\b[A-Z][a-zA-Z]*</complete-match>
+	</provider>
+	
+	<!-- Object-specific completions -->
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.Array</completions>
+		<complete-match capture="1">\bArray\.(\w*)</complete-match>
+	</provider>
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.Number</completions>
+		<complete-match capture="1">\bNumber\.(\w*)</complete-match>
+	</provider>
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.Math</completions>
+		<complete-match capture="1">\bMath\.(\w*)</complete-match>
+	</provider>
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.Object</completions>
+		<complete-match capture="1">\bObject\.(\w*)</complete-match>
+	</provider>
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.String</completions>
+		<complete-match capture="1">\bString\.(\w*)</complete-match>
+	</provider>
+	
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.Symbol</completions>
+		<complete-match capture="1">\bSymbol\.(\w*)</complete-match>
+	</provider>
+	<provider>
+		<selector>esnext, esnext *:not(string,string *,comment,regex,regex *)</selector>
+		<completions>com.onecrayon.esnext.native.Reflec</completions>
+		<complete-match capture="1">\bReflect\.(\w*)</complete-match>
 	</provider>
 	
 </codesense>
