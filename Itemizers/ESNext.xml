@@ -23,7 +23,7 @@
 	<!-- variable = class { ... } -->
 	<item name="js.class.assignment">
 		<class>ESCodeClassItem</class>
-		<start-zones>class.x-assignment:has-child(name:capture(name)) + brace.curly.open</start-zones>
+		<start-zones>class.x-esnext-assignment:has-child(name:capture(name)) + brace.curly.open</start-zones>
 		<end-zone>brace.curly.close</end-zone>
 		<subitems>
 			<include-root-itemizers/>
@@ -32,7 +32,7 @@
 	<!-- variable = class /*comment*/ { ... } -->
 	<item name="js.class.assignment.commented">
 		<class>ESCodeClassItem</class>
-		<start-zones>function.x-assignment:has-child(name:capture(name)) + comment + brace.curly.open</start-zones>
+		<start-zones>function.x-esnext-assignment:has-child(name:capture(name)) + comment + brace.curly.open</start-zones>
 		<end-zone>brace.curly.close</end-zone>
 		<subitems>
 			<include-root-itemizers/>
@@ -42,7 +42,7 @@
 	<!-- "property": class { ... } -->
 	<item name="js.class.property">
 		<class>ESCodeClassItem</class>
-		<start-zones>class.x-assignment:has-child(string:has-child(name:capture(name))) + brace.curly.open</start-zones>
+		<start-zones>class.x-esnext-assignment:has-child(string:has-child(name:capture(name))) + brace.curly.open</start-zones>
 		<end-zone>brace.curly.close</end-zone>
 		<subitems>
 			<include-root-itemizers/>
@@ -51,16 +51,16 @@
 	<!-- "property": class /*comment*/ { ... } -->
 	<item name="js.class.property.commented">
 		<class>ESCodeClassItem</class>
-		<start-zones>class.x-assignment:has-child(string:has-child(name:capture(name))) + comment + brace.curly.open</start-zones>
+		<start-zones>class.x-esnext-assignment:has-child(string:has-child(name:capture(name))) + comment + brace.curly.open</start-zones>
 		<end-zone>brace.curly.close</end-zone>
 		<subitems>
 			<include-root-itemizers/>
 		</subitems>
 	</item>
 	
-	<!-- var myFunction = () => { ... } --->
+	<!-- var myFunction = () => { ... } -->
 	<item name="js.function.assignment.arrow">
-		<start-zones>function.x-assignment.arrow:has-child(name:capture(name)) + brace.curly.open</start-zones>
+		<start-zones>function.x-esnext-assignment.arrow:has-child(name:capture(name)) + brace.curly.open</start-zones>
 		<end-zone>brace.curly.close</end-zone>
 		<subitems>
 			<include-root-itemizers />

@@ -114,7 +114,8 @@
 			<zone>
 				<!-- We currently only support functions that use braces for their body, because detecting single-line statements is next to impossible to do accurately -->
 				<expression>((?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(?:(\(.*?\)|[a-zA-Z_$][\w$.]*))\s*(=>))\s*(\{)|((\(.*?\)|[a-zA-Z_$][\w$.]*)\s*(=>))\s*(\{)</expression>
-				<capture number="1" name="function.definition.x-assignment.arrow"/>
+				<!-- There's some weirdness with JS itemizers are getting randomly preferenced over our more specific ESNext itemizers, so killing the x-assignment zone is necessary to ensure predictable Navigator functionality -->
+				<capture number="1" name="function.definition.x-esnext-assignment.arrow"/>
 				<capture number="2" name="keyword.storage.type"/>
 				<capture number="3" name="name"/>
 				<capture number="4" name="string.quoted">
@@ -155,7 +156,8 @@
 		<collection name="classes">
 			<!-- NEW: class syntax -->
 			<!-- var MyClass = class { ... } -->
-			<zone name="class.definition.x-assignment">
+			<!-- Avoid x-assignment itemizer collisions -->
+			<zone name="class.definition.x-esnext-assignment">
 				<starts-with>
 					<expression>(?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(class)</expression>
 					<capture number="1" name="keyword.storage.type" />
@@ -173,7 +175,7 @@
 					<expression>(?=\{)</expression>
 				</ends-with>
 				<subzones>
-					<include syntax="language-root.js" collection="keywords" />
+					<include collection="keywords" />
 					<!-- We include function invocation in case of mix-ins: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins -->
 					<zone>
 						<expression>(\.?)([a-zA-Z_$][\w$]*)\s*(\()</expression>
@@ -197,7 +199,7 @@
 					<expression>(?=\{)</expression>
 				</ends-with>
 				<subzones>
-					<include syntax="language-root.js" collection="keywords" />
+					<include collection="keywords" />
 					<!-- We include function invocation in case of mix-ins: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins -->
 					<zone>
 						<expression>(\.?)([a-zA-Z_$][\w$]*)\s*(\()</expression>
