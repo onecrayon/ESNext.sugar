@@ -87,55 +87,57 @@
 			<!-- MODIFIED: Verbatim copy, except for the addition of let/const/function*, separation of property quote zones into a utility collection, and addition of computed property names -->
 			<!-- someObject.doSomething = function(...) ... -->
 			<zone>
-				<expression>((?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+")|(\[[^\]]+\]))\s*(=|:)\s*(function\*?))\s*(\()|\b((function\*?)\s+([a-zA-Z_$][\w$]*)\s*)(\()|\b((function\*?)\s*)(\()</expression>
+				<expression>((?:(export)\s+)?(?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+")|(\[[^\]]+\]))\s*(=|:)\s*(function\*?))\s*(\()|\b((function\*?)\s+([a-zA-Z_$][\w$]*)\s*)(\()|\b((function\*?)\s*)(\()</expression>
 				<capture number="1" name="function.definition.x-assignment"/>
-				<capture number="2" name="keyword.storage.type" behavior="text-to-name" />
-				<capture number="3" name="name"/>
-				<capture number="4" name="string.quoted">
+				<capture number="2" name="keyword.control.x-export" />
+				<capture number="3" name="keyword.storage.type" behavior="text-to-name" />
+				<capture number="4" name="name"/>
+				<capture number="5" name="string.quoted">
 					<!--Optional quoted version of properties-->
 					<subzones>
 						<include collection="utility.property-assignment" />
 					</subzones>
 				</capture>
-				<capture number="5" name="name.computed">
+				<capture number="6" name="name.computed">
 					<subzones>
 						<include collection="utility.computed-property" />
 					</subzones>
 				</capture>
-				<capture number="6" name="operator" behavior="text-to-name" behavior-match="^=|(:)$" behavior-transform="(?1:x-colon:)"/>
-				<capture number="7" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator:)"/>
-				<capture number="8" name="punctuation.brace.round.open"/>
+				<capture number="7" name="operator" behavior="text-to-name" behavior-match="^=|(:)$" behavior-transform="(?1:x-colon:)"/>
+				<capture number="8" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator:)"/>
+				<capture number="9" name="punctuation.brace.round.open"/>
 				<!-- function doSomething(...) ... -->
-				<capture number="9" name="function.definition"/>
-				<capture number="10" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator:)"/>
-				<capture number="11" name="name"/>
-				<capture number="12" name="punctuation.brace.round.open"/>
+				<capture number="10" name="function.definition"/>
+				<capture number="11" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator:)"/>
+				<capture number="12" name="name"/>
+				<capture number="13" name="punctuation.brace.round.open"/>
 				<!-- function() { ... } -->
-				<capture number="13" name="function.definition.anonymous"/>
-				<capture number="14" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator:)"/>
-				<capture number="15" name="punctuation.brace.round.open"/>
+				<capture number="14" name="function.definition.anonymous"/>
+				<capture number="15" name="keyword.storage.type" behavior="text-to-name" behavior-match="(\*)$" behavior-transform="(?1:generator:)"/>
+				<capture number="16" name="punctuation.brace.round.open"/>
 			</zone>
 			<!-- NEW: Arrow syntax -->
 			<zone>
 				<!-- We currently only support functions that use braces for their body, because detecting single-line statements is next to impossible to do accurately -->
-				<expression>((?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+")|(\[[^\]]+\]))\s*(=|:)\s*(?:(\(.*?\)|[a-zA-Z_$][\w$.]*))\s*(=>))\s*(\{)|((\(.*?\)|[a-zA-Z_$][\w$.]*)\s*(=>))\s*(\{)</expression>
+				<expression>((?:(export)\s+)?(?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+")|(\[[^\]]+\]))\s*(=|:)\s*(?:(\(.*?\)|[a-zA-Z_$][\w$.]*))\s*(=>))\s*(\{)|((\(.*?\)|[a-zA-Z_$][\w$.]*)\s*(=>))\s*(\{)</expression>
 				<!-- There's some weirdness with JS itemizers are getting randomly preferenced over our more specific ESNext itemizers, so killing the x-assignment zone is necessary to ensure predictable Navigator functionality -->
 				<capture number="1" name="function.definition.x-esnext-assignment.arrow"/>
-				<capture number="2" name="keyword.storage.type"/>
-				<capture number="3" name="name"/>
-				<capture number="4" name="string.quoted">
+				<capture number="2" name="keyword.control.x-export" />
+				<capture number="3" name="keyword.storage.type"/>
+				<capture number="4" name="name"/>
+				<capture number="5" name="string.quoted">
 					<!--Optional quoted version of properties-->
 					<subzones>
 						<include collection="utility.property-assignment" />
 					</subzones>
 				</capture>
-				<capture number="5" name="name.computed">
+				<capture number="6" name="name.computed">
 					<subzones>
 						<include collection="utility.computed-property" />
 					</subzones>
 				</capture>
-				<capture number="6" name="operator" behavior="text-to-name" behavior-match="^(:)$" behavior-transform="(?1:x-colon:)"/>
-				<capture number="7" name="parameters">
+				<capture number="7" name="operator" behavior="text-to-name" behavior-match="^(:)$" behavior-transform="(?1:x-colon:)"/>
+				<capture number="8" name="parameters">
 					<subzones>
 						<include collection="comments" />
 						<include collection="strings.basic" />
@@ -144,11 +146,11 @@
 						<include collection="punctuation" />
 					</subzones>
 				</capture>
-				<capture number="8" name="operator.x-arrow" />
-				<capture number="9" name="punctuation.brace.curly.open" />
+				<capture number="9" name="operator.x-arrow" />
+				<capture number="10" name="punctuation.brace.curly.open" />
 				<!-- Anonymous arrow functions -->
-				<capture number="10" name="function.definition.anonymous.arrow" />
-				<capture number="11" name="parameters">
+				<capture number="11" name="function.definition.anonymous.arrow" />
+				<capture number="12" name="parameters">
 					<subzones>
 						<include collection="comments" />
 						<include collection="strings.basic" />
@@ -157,8 +159,8 @@
 						<include collection="punctuation" />
 					</subzones>
 				</capture>
-				<capture number="12" name="operator.x-arrow" />
-				<capture number="13" name="punctuation.brace.curly.open" />
+				<capture number="13" name="operator.x-arrow" />
+				<capture number="14" name="punctuation.brace.curly.open" />
 			</zone>
 		</collection>
 
@@ -169,17 +171,18 @@
 			<!-- Avoid x-assignment itemizer collisions -->
 			<zone name="class.definition.x-esnext-assignment">
 				<starts-with>
-					<expression>(?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(class)</expression>
-					<capture number="1" name="keyword.storage.type" />
-					<capture number="2" name="name" />
-					<capture number="3" name="string.quoted">
+					<expression>(?:(export)\s+)?(?:(var|let|const)\s+)?(?:([a-zA-Z_$][\w$.]*)|('(?:\\'|[^'])+'|"(?:\\"|[^"])+"))\s*(=|:)\s*(class)</expression>
+					<capture number="1" name="keyword.control.x-export" />
+					<capture number="2" name="keyword.storage.type" />
+					<capture number="3" name="name" />
+					<capture number="4" name="string.quoted">
 						<!--Optional quoted version of properties-->
 						<subzones>
 							<include collection="utility.property-assignment" />
 						</subzones>
 					</capture>
-					<capture number="4" name="operator" behavior="text-to-name" behavior-match="^(:)$" behavior-transform="(?1:x-colon:)"/>
-					<capture number="5" name="keyword.storage.type" />
+					<capture number="5" name="operator" behavior="text-to-name" behavior-match="^(:)$" behavior-transform="(?1:x-colon:)"/>
+					<capture number="6" name="keyword.storage.type" />
 				</starts-with>
 				<ends-with>
 					<expression>(?=\{)</expression>
@@ -201,9 +204,10 @@
 			
 			<zone name="class.definition">
 				<starts-with>
-					<expression>\b(class)\s+([a-zA-Z_$][\w$.]*)</expression>
-					<capture number="1" name="keyword.control"/>
-					<capture number="2" name="name"/>
+					<expression>(?:(export)\s+)?\b(class)\s+([a-zA-Z_$][\w$.]*)</expression>
+					<capture number="1" name="keyword.control.x-export" />
+					<capture number="2" name="keyword.storage.type"/>
+					<capture number="3" name="name"/>
 				</starts-with>
 				<ends-with>
 					<expression>(?=\{)</expression>
@@ -235,7 +239,7 @@
 		<collection name="keywords">
 			<!-- MODIFIED: several values moved from keyword.reserved to keyword.control; Map/Set/etc. added to support.variable.built-in; binary and octal numbers to constant.numeric -->
 			<zone>
-				<expression>\b(?:(case|continue|default|finally|for|throw|void|delete|in|instanceof|typeof|with|new|of|as|from|yield\*?|extends)|(else if)|(catch|switch|break|return|else|try|do|while|if|export|import)|(abstract|boolean|byte|char|debugger|double|enum|final|float|goto|implements|import|int|interface|long|native|package|private|protected|public|short|synchronized|throws|transient|volatile)|(super|this)|(Array|Boolean|Date|Function|Math|Number|Object|RegExp|String|Map|Set|WeakMap|WeakSet|Proxy|Symbol|Promise|Reflect|console|document|history|location|screen|window|self|top|parent)|(undefined|NaN|true|false|null)|([0-9]+\.?[0-9]*(?:[eE]-?[0-9]+)?|0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|Infinity))\b</expression>
+				<expression>\b(?:(case|continue|default|finally|for|throw|void|delete|in|instanceof|typeof|with|new|of|as|from|yield\*?|extends)|(else if)|(catch|switch|break|return|else|try|do|while|if|import)|(abstract|boolean|byte|char|debugger|double|enum|final|float|goto|implements|import|int|interface|long|native|package|private|protected|public|short|synchronized|throws|transient|volatile)|(super|this)|(Array|Boolean|Date|Function|Math|Number|Object|RegExp|String|Map|Set|WeakMap|WeakSet|Proxy|Symbol|Promise|Reflect|console|document|history|location|screen|window|self|top|parent)|(undefined|NaN|true|false|null)|([0-9]+\.?[0-9]*(?:[eE]-?[0-9]+)?|0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|Infinity))\b</expression>
 				<capture number="1" name="keyword.control"/>
 				<capture number="2" name="keyword.control.x-else-if"/>
 				<capture number="3" name="keyword.control" behavior="text-to-name" behavior-transform="x-$0" />
@@ -249,8 +253,10 @@
 		
 		<collection name="keywords.storage.type">
 			<!-- MODIFIED: originally just detected function|var -->
-			<zone name="keyword.storage.type">
-				<expression>\b(?:function\*?|var|let|const|static|class|get|set)\b</expression>
+			<zone>
+				<expression>\b(?:(?:function\*?|var|let|const|static|class|get|set)|(export))\b</expression>
+				<capture number="1" name="keyword.storage.type" />
+				<capture number="2" name="keyword.control.x-export" />
 			</zone>
 		</collection>
 
@@ -306,20 +312,21 @@
 			<!-- We define special zones for variable assignments to allow the itemizers to easily capture anonymous functions assigned to specific variables as a named function (since they are equivalent, and otherwise we end up with a lot of anonymous functions depending on coding style) -->
 			<!-- The var keyword is included to allow the itemizers to be drag and dropped with predictable results -->
 			<zone>
-				<expression>((?:(var|let|const)\s+)?([a-zA-Z_$][\w$.]*)\s*(=|:))(?!=)|(\.?)(addEventListener|removeEventListener)\s*(\()|(?:(\.?)|(static|get|set)\s+)([a-zA-Z_$][\w$]*)\s*(\()</expression>
+				<expression>((?:(export)\s+)?(?:(var|let|const)\s+)?([a-zA-Z_$][\w$.]*)\s*(=|:))(?!=)|(\.?)(addEventListener|removeEventListener)\s*(\()|(?:(\.?)|(static|get|set)\s+)([a-zA-Z_$][\w$]*)\s*(\()</expression>
 				<capture number="1" name="x-assignment"/>
-				<capture number="2" name="keyword.storage.type" />
-				<capture number="3" name="name"/>
-				<capture number="4" name="operator" behavior="text-to-name" behavior-match="^=|(:)$" behavior-transform="(?1:x-colon:)"/>
+				<capture number="2" name="keyword.control.x-export" />
+				<capture number="3" name="keyword.storage.type" />
+				<capture number="4" name="name"/>
+				<capture number="5" name="operator" behavior="text-to-name" behavior-match="^=|(:)$" behavior-transform="(?1:x-colon:)"/>
 				<!-- Special case to avoid [text] comparisons in CodeSenseProviders -->
-				<capture number="5" name="punctuation"/>
-				<capture number="6" name="function.eventListener"/>
-				<capture number="7" name="punctuation.brace.round.open"/>
+				<capture number="6" name="punctuation"/>
+				<capture number="7" name="function.eventListener"/>
+				<capture number="8" name="punctuation.brace.round.open"/>
 				<!--Function Invocation/Shorthand declarations-->
-				<capture number="8" name="punctuation"/>
-				<capture number="9" name="keyword.storage.type" />
-				<capture number="10" name="function"/>
-				<capture number="11" name="punctuation.brace.round.open"/>
+				<capture number="9" name="punctuation"/>
+				<capture number="10" name="keyword.storage.type" />
+				<capture number="11" name="function"/>
+				<capture number="12" name="punctuation.brace.round.open"/>
 			</zone>
 			<!--Generic var/function keywords (needs to be last so that they don't mess up x-assignment zones)-->
 			<include collection="keywords.storage.type" />
